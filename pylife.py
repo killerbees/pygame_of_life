@@ -3,7 +3,7 @@ from random import randint
 import pygame
 
 def createScreen():
-    print 'available resolutions', pygame.display.list_modes(0)
+    print('available resolutions', pygame.display.list_modes(0))
     #@todo make this a command line switch
     #the next two lines set up full screen options, to run in a window see below
     screen_width, screen_height = pygame.display.list_modes(0)[0] 
@@ -11,13 +11,13 @@ def createScreen():
     options = pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF        
     
     #the next two lines set up windowed options - swap these with above to run full screen instead
-    #screen_width, screen_height = (600,600)
-    #options=0
+    screen_width, screen_height = (600,600)
+    options=0
     
     #create the screen with the options
     screen = pygame.display.set_mode(
         (screen_width, screen_height), options)
-    print "screen created, size is:", screen.get_size()
+    print("screen created, size is:", screen.get_size())
     return screen
     
 def evolve_cell(alive, neighbours):
@@ -72,8 +72,8 @@ def draw_block(x, y, alive_color):
     block_size = 9
     x *= block_size
     y *= block_size
-    center_point = ((x + (block_size / 2)), (y + (block_size / 2)))
-    pygame.draw.circle(screen, alive_color, center_point, block_size / 2,0)
+    center_point = (int(x + (block_size / 2)), int(y + (block_size / 2)))
+    pygame.draw.circle(screen, alive_color, center_point, int(block_size / 2),0)
 
 #this is where we register our event listeners
 #yes, we're just calling methods
@@ -87,7 +87,7 @@ def handleInputEvents(xlen, ylen):
         if(event.type == pygame.KEYDOWN):
             sys.exit(0) #quit on any key
         if (event.type == pygame.QUIT):  #pygame issues a quit event, for e.g. by closing the window
-            print "quitting"
+            print("quitting")
             sys.exit(0)
             
             
@@ -102,8 +102,8 @@ def main():
     cell_number = 0
     alive_color = pygame.Color(0,0,0)
     alive_color.hsva = [h, 100, 100]
-    xlen = xmax / 9
-    ylen = ymax / 9
+    xlen = int(xmax / 9)
+    ylen = int(ymax / 9)
     global world
     world = make_random_grid(xlen, ylen)
     while True:
@@ -116,7 +116,7 @@ def main():
                     cell_color = alive_color if alive else BLACK
                     draw_block(x, y, cell_color)
             pygame.display.flip()
-            h = (h + 2) % 360
+            #h = (h + 2) % 360
             alive_color.hsva = (h, 100, 100)
             world = evolve(world)
             cell_number = 0
